@@ -22,10 +22,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
 
         int cheker;
 
-        Bitmap bitmap;
-
-
-
+  
 
         public Form1()
         {
@@ -221,7 +218,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
         //search for Product by criteria
         private void btnSearchProduct_Click(object sender, EventArgs e)
         {
-            cheker = 0;
+            
 
 
             try
@@ -234,11 +231,13 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
                 OleDbCommand cmd = conn.CreateCommand();
 
                 cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT* FROM Products WHERE " +
+                    "SKU LIKE @SearchText OR " +
+                    " ProductName LIKE @SearchText OR Modell " +
+                   "LIKE @SearchText OR Description LIKE @SearchText";
+                cmd.Parameters.AddWithValue("@SearchText", "%" + textBoxSearchProduct.Text + "%");
 
-                cmd.CommandText = "select * from Products where SKU = '"+ textBoxSearchProduct.Text+"' or ProductName = '"+textBoxSearchProduct.Text+"' or Modell = '"+ textBoxSearchProduct.Text+ 
-                    "' or Description = '"+ textBoxSearchProduct.Text+"'";
-
-                cmd.ExecuteNonQuery();
+                
                 DataTable dt = new DataTable();
                 OleDbDataAdapter dp = new OleDbDataAdapter(cmd);
                 dp.Fill(dt);
@@ -248,13 +247,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
 
                 conn.Close();
 
-                if (cheker == 0 )
-                {
-
-                    MessageBox.Show( "Record not found", "Error",MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    textBoxSearchProduct.Text = " ";
-                }
-
+                
             }
             catch (Exception ex)
             {
@@ -490,13 +483,13 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
         private void btnGoToClients_Click(object sender, EventArgs e)
         {
             Form2 frm = new Form2();
-            frm.ShowDialog();
+            frm.Show();
         }
         // Open Form Sales
         private void btnGoToSales_Click(object sender, EventArgs e)
         {
             Form3 frm = new Form3();
-            frm.ShowDialog();
+            frm.Show();
         }
 
 

@@ -30,10 +30,10 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -43,7 +43,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.labelEnd = new System.Windows.Forms.Label();
             this.labelStart = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.textBoxSearchClient = new System.Windows.Forms.TextBox();
+            this.textBoxSearchSales = new System.Windows.Forms.TextBox();
             this.btnSearchClient = new System.Windows.Forms.Button();
             this.panelForTransitionToTable = new System.Windows.Forms.Panel();
             this.btnExit = new System.Windows.Forms.Button();
@@ -65,6 +65,8 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.labelOrderDate = new System.Windows.Forms.Label();
             this.labelSalesOrderID = new System.Windows.Forms.Label();
             this.panelForButtons = new System.Windows.Forms.Panel();
+            this.buttonUnreturned = new System.Windows.Forms.Button();
+            this.buttonPayed = new System.Windows.Forms.Button();
             this.buttonMostOrderd = new System.Windows.Forms.Button();
             this.buttonReturned = new System.Windows.Forms.Button();
             this.buttonUnpayed = new System.Windows.Forms.Button();
@@ -75,8 +77,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.btnInsertOrder = new System.Windows.Forms.Button();
             this.panelForFormLabel = new System.Windows.Forms.Panel();
             this.labelSales = new System.Windows.Forms.Label();
-            this.buttonPayed = new System.Windows.Forms.Button();
-            this.buttonUnreturned = new System.Windows.Forms.Button();
+            this.database_Shop_ProjectDataSet = new Shop_AccessDB_Save_Update_Delete_Search.Database_Shop_ProjectDataSet();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -86,6 +87,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.panelForTxtBox.SuspendLayout();
             this.panelForButtons.SuspendLayout();
             this.panelForFormLabel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.database_Shop_ProjectDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -113,28 +115,25 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.panel3.Controls.Add(this.dtpEnd);
             this.panel3.Controls.Add(this.labelEnd);
             this.panel3.Controls.Add(this.labelStart);
-            this.panel3.Location = new System.Drawing.Point(971, 34);
+            this.panel3.Location = new System.Drawing.Point(954, 9);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(608, 529);
+            this.panel3.Size = new System.Drawing.Size(625, 554);
             this.panel3.TabIndex = 18;
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
-            this.chart1.Location = new System.Drawing.Point(18, 101);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(30, 111);
             this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series5.CustomProperties = "LabelStyle=Top, DrawingStyle=Cylinder";
-            series5.Legend = "Legend1";
-            series5.Name = "Sales ";
-            this.chart1.Series.Add(series5);
-            this.chart1.Size = new System.Drawing.Size(574, 371);
-            this.chart1.TabIndex = 12;
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(395, 341);
+            this.chart1.TabIndex = 18;
             this.chart1.Text = "chart1";
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
@@ -194,19 +193,19 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.panel2.Controls.Add(this.textBoxSearchClient);
+            this.panel2.Controls.Add(this.textBoxSearchSales);
             this.panel2.Controls.Add(this.btnSearchClient);
             this.panel2.Location = new System.Drawing.Point(17, 812);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(556, 66);
             this.panel2.TabIndex = 5;
             // 
-            // textBoxSearchClient
+            // textBoxSearchSales
             // 
-            this.textBoxSearchClient.Location = new System.Drawing.Point(5, 23);
-            this.textBoxSearchClient.Name = "textBoxSearchClient";
-            this.textBoxSearchClient.Size = new System.Drawing.Size(432, 30);
-            this.textBoxSearchClient.TabIndex = 8;
+            this.textBoxSearchSales.Location = new System.Drawing.Point(5, 23);
+            this.textBoxSearchSales.Name = "textBoxSearchSales";
+            this.textBoxSearchSales.Size = new System.Drawing.Size(432, 30);
+            this.textBoxSearchSales.TabIndex = 8;
             // 
             // btnSearchClient
             // 
@@ -218,6 +217,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.btnSearchClient.TabIndex = 7;
             this.btnSearchClient.Text = "Search";
             this.btnSearchClient.UseVisualStyleBackColor = true;
+            this.btnSearchClient.Click += new System.EventHandler(this.btnSearchClient_Click);
             // 
             // panelForTransitionToTable
             // 
@@ -267,14 +267,14 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.dgvSales.AllowDrop = true;
             this.dgvSales.BackgroundColor = System.Drawing.Color.GhostWhite;
             this.dgvSales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.InactiveCaption;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSales.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.InactiveCaption;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSales.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvSales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvSales.Location = new System.Drawing.Point(17, 575);
             this.dgvSales.Name = "dgvSales";
@@ -392,6 +392,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.btnClearDataForm3.TabIndex = 12;
             this.btnClearDataForm3.Text = "Clear Fields";
             this.btnClearDataForm3.UseVisualStyleBackColor = true;
+            this.btnClearDataForm3.Click += new System.EventHandler(this.btnClearDataForm3_Click);
             // 
             // textBoxOrderID
             // 
@@ -452,6 +453,26 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.panelForButtons.Size = new System.Drawing.Size(503, 354);
             this.panelForButtons.TabIndex = 1;
             // 
+            // buttonUnreturned
+            // 
+            this.buttonUnreturned.Location = new System.Drawing.Point(370, 196);
+            this.buttonUnreturned.Name = "buttonUnreturned";
+            this.buttonUnreturned.Size = new System.Drawing.Size(117, 68);
+            this.buttonUnreturned.TabIndex = 13;
+            this.buttonUnreturned.Text = "Show Unreturned";
+            this.buttonUnreturned.UseVisualStyleBackColor = true;
+            this.buttonUnreturned.Click += new System.EventHandler(this.buttonUnreturned_Click);
+            // 
+            // buttonPayed
+            // 
+            this.buttonPayed.Location = new System.Drawing.Point(370, 104);
+            this.buttonPayed.Name = "buttonPayed";
+            this.buttonPayed.Size = new System.Drawing.Size(117, 72);
+            this.buttonPayed.TabIndex = 12;
+            this.buttonPayed.Text = "Show payed";
+            this.buttonPayed.UseVisualStyleBackColor = true;
+            this.buttonPayed.Click += new System.EventHandler(this.buttonPayed_Click);
+            // 
             // buttonMostOrderd
             // 
             this.buttonMostOrderd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -506,6 +527,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.btnClientsShopedlastWeek.TabIndex = 4;
             this.btnClientsShopedlastWeek.Text = "Shoped  in last week";
             this.btnClientsShopedlastWeek.UseVisualStyleBackColor = false;
+            this.btnClientsShopedlastWeek.Click += new System.EventHandler(this.btnClientsShopedlastWeek_Click);
             // 
             // btnDeleteOrder
             // 
@@ -567,25 +589,10 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.labelSales.Text = "Sales";
             this.labelSales.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // buttonPayed
+            // database_Shop_ProjectDataSet
             // 
-            this.buttonPayed.Location = new System.Drawing.Point(370, 104);
-            this.buttonPayed.Name = "buttonPayed";
-            this.buttonPayed.Size = new System.Drawing.Size(117, 72);
-            this.buttonPayed.TabIndex = 12;
-            this.buttonPayed.Text = "Show payed";
-            this.buttonPayed.UseVisualStyleBackColor = true;
-            this.buttonPayed.Click += new System.EventHandler(this.buttonPayed_Click);
-            // 
-            // buttonUnreturned
-            // 
-            this.buttonUnreturned.Location = new System.Drawing.Point(370, 196);
-            this.buttonUnreturned.Name = "buttonUnreturned";
-            this.buttonUnreturned.Size = new System.Drawing.Size(117, 68);
-            this.buttonUnreturned.TabIndex = 13;
-            this.buttonUnreturned.Text = "Show Unreturned";
-            this.buttonUnreturned.UseVisualStyleBackColor = true;
-            this.buttonUnreturned.Click += new System.EventHandler(this.buttonUnreturned_Click);
+            this.database_Shop_ProjectDataSet.DataSetName = "Database_Shop_ProjectDataSet";
+            this.database_Shop_ProjectDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // Form3
             // 
@@ -594,7 +601,8 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.ClientSize = new System.Drawing.Size(1709, 899);
             this.Controls.Add(this.panel1);
             this.Name = "Form3";
-            this.Text = "Form3";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Sales";
             this.Load += new System.EventHandler(this.Form3_Load);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
@@ -609,6 +617,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
             this.panelForButtons.ResumeLayout(false);
             this.panelForFormLabel.ResumeLayout(false);
             this.panelForFormLabel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.database_Shop_ProjectDataSet)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -619,7 +628,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox textBoxSearchClient;
+        private System.Windows.Forms.TextBox textBoxSearchSales;
         private System.Windows.Forms.Button btnSearchClient;
         private System.Windows.Forms.Panel panelForTransitionToTable;
         private System.Windows.Forms.Button btnExit;
@@ -648,7 +657,6 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
         private System.Windows.Forms.Button buttonUnpayed;
         private System.Windows.Forms.CheckBox checkBoxReturned;
         private System.Windows.Forms.CheckBox checkBoxPayed;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Label labelEnd;
         private System.Windows.Forms.Label labelStart;
         private System.Windows.Forms.DateTimePicker dtpStart;
@@ -660,5 +668,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
         private System.Windows.Forms.DateTimePicker dtpOrderDate;
         private System.Windows.Forms.Button buttonUnreturned;
         private System.Windows.Forms.Button buttonPayed;
+        private Database_Shop_ProjectDataSet database_Shop_ProjectDataSet;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

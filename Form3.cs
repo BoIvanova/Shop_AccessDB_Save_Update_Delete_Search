@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.OleDb;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -54,83 +55,68 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
 
         private void Form3_Load(object sender, EventArgs e)
         {
+          
             dataviewer();
 
 
-            // Replace with your actual start and end dates
-            DateTime startDate = dtpStart.Value;
 
-            DateTime endDate = dtpEnd.Value;
-
-            // Call the method to draw the pie chart
-
-
-
+            dtpStart.Value = DateTime.Now;
+            dtpEnd.Value = DateTime.Now;
             dtpOrderDate.Value = DateTime.Now;
 
         }
 
-        private void DrawPieChart(DateTime startDate, DateTime endDate)
-        {
 
+       
+
+
+
+    private void buttonDrawChart_Click(object sender, EventArgs e)
+        {
             try
             {
 
+                chart1.Series.Clear();
+                chart1.Series.Add("Sales");
 
+
+                DataSet ds = new DataSet();
 
                 conn.Open();
 
+                
                 OleDbCommand cmd = conn.CreateCommand();
-
                 cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM Sales WHERE OrderDate BETWEEN @StartDate AND @EndDate";
+                cmd.Parameters.AddWithValue("@StartDate", dtpStart.Value.Date); // Use .Date to get only the date part
+                cmd.Parameters.AddWithValue("@EndDate", dtpEnd.Value.Date);
 
-                cmd.CommandText = "select  Sales.SalesID, Products.ProductName from Sales inner join Products on Sales.SKU = Products.SKU where Sales.OrderDate between '" + dtpStart.Value + "' and '" + dtpEnd.Value + " ' ";
-                //cmd.Retri();
-                DataTable dt = new DataTable();
+
                 OleDbDataAdapter dp = new OleDbDataAdapter(cmd);
-                dp.Fill(dt);
-                dgvSales.DataSource = dt;
+                dp.Fill(ds);
 
-                Chart chart = new Chart();
-                chart.Dock = DockStyle.Fill;
+                chart1.DataSource = ds;
 
-                // Add a series to the chart
-                Series series = new Series("ProductName");
-                series.ChartType = SeriesChartType.Pie;
+                //set the member of the chart data source used to data bind to the X-values of the series  
+                chart1.Series["Sales"].XValueMember = "OrderDate";
+                  
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    series.Points.AddXY(row["ProductName"].ToString(), Convert.ToDouble(row["TotalProducts"]));
 
-                }
-
-                chart.Series.Add(series);
-
-                Controls.Add(chart);
-
+                //set the member columns of the chart data source used to data bind to the X-values of the series  
+                chart1.Series["Sales"].YValueMembers = "SKU";
+                chart1.Titles.Add("Products for period");
 
                 conn.Close();
+
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Access Connect", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message, "Access Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conn.Close();
             }
 
 
-
-
-
-
-        }
-
-
-        private void buttonDrawChart_Click(object sender, EventArgs e)
-        {
-            DateTime startDate = dtpStart.Value;
-            DateTime endDate = dtpEnd.Value;
-
-            DrawPieChart(startDate, endDate);
         }
 
         private void btnInsertOrder_Click(object sender, EventArgs e)
@@ -295,10 +281,7 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
 
 
 
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
-        }
+   
 
         private void buttonUnpayed_Click(object sender, EventArgs e)
         {
@@ -428,14 +411,18 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
 
                 OleDbCommand cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT TOP 1 COUNT(DISTINCT Sales.SKU)   AS MostSoldProduct from  Sales ";
-
-                conn.Close();
+                cmd.CommandText = "SELECT TOP 1 p.ProductName, p.Modell, p.Description,  s.SKU, COUNT(*) AS OrderCount FROM Sales s " +
+                    "inner join Products p ON p.SKU=s.SKU " +
+                    "GROUP BY s.SKU,p.ProductName, p.Modell, p.Description " +
+                    "ORDER BY COUNT(*) DESC ";
+;               cmd.ExecuteNonQuery();
 
                 // Call the dataviewer method after retrieving data
                 DataTable dt = new DataTable();
                 OleDbDataAdapter dp = new OleDbDataAdapter(cmd);
                 dp.Fill(dt);
+
+                conn.Close();
                 dgvSales.DataSource = dt;
 
             }
@@ -449,6 +436,87 @@ namespace Shop_AccessDB_Save_Update_Delete_Search
 
 
 
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+        }
+
+
+
+
+        private void btnClearDataForm3_Click(object sender, EventArgs e)
+        {
+            textBoxOrderID.Text = "";
+            textBoxClientID.Text = "";
+            textBoxProductNumber.Text = "";
+            dtpOrderDate.Value = DateTime.Now;
+            dtpPaymentdate.Value = DateTime.Now;
+            checkBoxPayed.Checked = false;
+            checkBoxReturned.Checked = false;
+
+        }
+
+        private void btnClientsShopedlastWeek_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+
+                conn.Open();
+
+                OleDbCommand cmd = conn.CreateCommand();
+
+                cmd.CommandType = CommandType.Text;
+
+                cmd.CommandText = " SELECT c.FirstName, c.LastName, s.OrderDate " +
+                    "FROM Sales s " +
+                    "INNER JOIN Clients c ON c.ClientID = s.ClientID " +
+                    "WHERE s.OrderDate between Date() and  DateAdd('w', -1, Date())  ";
+                cmd.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                OleDbDataAdapter dp = new OleDbDataAdapter(cmd);
+                dp.Fill(dt);
+
+                conn.Close();
+
+                dgvSales.DataSource = dt;
+
+                MessageBox.Show("report successfull", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Access Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conn.Close();
+            }
+        }
+
+        private void btnSearchClient_Click(object sender, EventArgs e)
+        {
+            try
+            {
+               
+                OleDbCommand cmd = conn.CreateCommand();
+                string sqlQuery = "SELECT * FROM Sales WHERE SalesID LIKE @SearchText  " +
+                    " OR ClientID LIKE @SearchText ";
+                cmd.Parameters.AddWithValue("@SearchText", "%" +textBoxSearchSales.Text + "%");
+                cmd.CommandText = sqlQuery;
+                conn.Open();
+                OleDbDataAdapter dp = new OleDbDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dp.Fill(dt);
+                dgvSales.DataSource =dt;
+
+                conn.Close();
+            }
+
+            catch
+            {
+
+
+            }
         }
     }
 
